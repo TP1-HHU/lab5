@@ -29,7 +29,6 @@ int main(void){
     srand(time(NULL));
     const int Npart  = 500;
     particle*  p  = new particle[Npart];
-    const double step = 0.1;
     statistics s;
 
     ofstream ofstat("statistics");
