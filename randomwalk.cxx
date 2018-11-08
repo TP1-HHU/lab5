@@ -29,6 +29,7 @@ int main(void){
     srand(time(NULL));
     const int Npart  = 500;
     particle*  p  = new particle[Npart];
+    const double step = 0.1;
     statistics s;
 
     ofstream ofstat("statistics");
@@ -56,11 +57,24 @@ int main(void){
 }
 //------------------------------------------------------------------------------
 statistics stat(const particle* const p, const int N){
-  // your code goes here
+    statistics s;
+    s.msd = 0; s.sx = 0; s.sy = 0;
+    for(int i = 0; i < N; i++){
+        double r2 = p[i].x*p[i].x + p[i].y*p[i].y;
+        s.msd += r2;
+        s.sx += p[i].x;
+        s.sy += p[i].y;
+    }
+    s.msd /= N;
+    return s;
 }
 //------------------------------------------------------------------------------
 void push(particle* const p, const int N){
-    // your code goes here
+    for(int i = 0; i < N; i++){
+        double phi = 2*M_PI*rand()/double(RAND_MAX);
+        p[i].x += cos(phi);
+	      p[i].y += sin(phi);
+    }
 }
 //------------------------------------------------------------------------------
 void init(particle* const p, const int N){
