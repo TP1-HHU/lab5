@@ -1,19 +1,56 @@
-### Lab class 5, Structs
+# Lab 5
 
-This problem considers two-dimensional free diffusion of particles that perform a random motion. We consider *N* particles that all start in the origin of the coordinate system *(0,0)*. In each time step, every particle moves the same distance r=1, but each one moves in a different, random direction. All directions should be considered equally probable.
+A simple vector class
+---
 
-After a certain time we want to plot the positions of all the particles and some statistical properties of their coordinates, in particular their center of mass
-and the mean square displacement (MSD).
+In this lab you will implement a simple vector class `Vec`.
+Everything for this lab class can go into the same source file.
 
-The code you obtain at the start contains already some infrastructure.
-Get familiar with it.
+The class `Vec` shall implement the following features:
+* A **standard constructor** that allows to generate a `Vec` object
+  via
 
-Things that are missing are:
-* The function `push(...)` that takes all particles and advances their coordinates
- **one timestep**. Propagate every particle forward by a distance of *r=1* into
- a random direction.
+  ```c++
+  int N = 10;
+  Vec v(N);
+  ```
 
-* The function `statistics(...)` should take all particles and calculate their
-mean square displacement, i.e. the mean value of the squared distances of
-the particles from the origin. Additionally the function shall calculate
-the position of the center of mass.
+  In the standard constructor sufficient memory shall be allocated
+  to store *N* values of type double.
+
+* A **destructor** that cleans up the memory that has been
+  allocated in the **constructor**.
+
+* `void set(const int i, const double a)` and `double get(const int i)` member functions that allow to set and read, respectively, the value the *i*-th entry, i.e. that allow to do
+the follwing:
+```c++
+...
+Vec v(N);
+double a = 5.2;
+...
+v.set(0,a);  // Set the value of the 1st entry to 5.2
+cout << v.get(0) << endl;
+```
+Indices shall be 0-based, i.e. the first entry corresponds to index 0.
+Make sure that ```get()``` and ```set()```
+ member function prevents access to indices
+outside of the valid range 0...N-1.
+
+* A function `print` that prints the whole content of the
+  vector to the screen. Per line print first the index, then the value.
+
+* Extend the class such that every `Vec` object has a private
+  `const string name` member. The standard constructor is then extended
+  to take a further `string` parameter whos value is stored into the
+  `const string name` variable.
+  ```c++
+  ...
+  Vec v1(N,"vector 1");
+  Vec v2(N);
+  ...
+  ```
+  You will need a constructor initializer list to handle this.
+  Make this `string` an optional argument with a default value "default",
+  such that both lines from the code above are possible.
+
+**Additionally** to the class, write a short program that uses all the functions that you wrote to verify your code.
